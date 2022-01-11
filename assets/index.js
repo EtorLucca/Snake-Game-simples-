@@ -4,20 +4,29 @@ window.onload = function () {
   document.addEventListener("keydown", keyPush);
   setInterval(game, 100);
 
+  //Configurando velocidade
   const vel = 1;
   let vx = (vy = 0);
+  //Configurando posição x e y
   let px = 10;
   let py = 15;
+  //Configurando "peças"
   let tp = 20;
   let qpx = 35;
-  let qpy = 20; 
+  let qpy = 20;
+  //Configurando a "maçã"
   let ax = (ay = 15);
+
+  //Score
   let score = 0;
 
+  //Rastro e calda da cobra
   let trail = [];
   tail = 5;
 
   function game() {
+
+    //Controle de posicionamento
     px += vx;
     py += vy;
     if (px < 0) {
@@ -33,8 +42,10 @@ window.onload = function () {
       py = 0;
     }
 
+    //Mostrando score = 0 (inicio)
     document.getElementById("score").value = score;
 
+    //Configurando o desenho (canvas)
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, stage.width, stage.height);
 
@@ -44,6 +55,7 @@ window.onload = function () {
     ctx.fillStyle = "gray";
     for (let i = 0; i < trail.length; i++) {
       ctx.fillRect(trail[i].x * tp, trail[i].y * tp, tp - 1, tp - 1);
+      //GameOver
       if (trail[i].x == px && trail[i].y == py) {
         vx = vy = 0;
         tail = 5;
@@ -51,11 +63,13 @@ window.onload = function () {
       }
     }
 
+    //controlando a calda
     trail.push({ x: px, y: py });
     while (trail.length > tail) {
       trail.shift();
     }
 
+    //Pegando a "maçã"
     if (ax == px && ay == py) {
       tail++;
       score++;
@@ -65,6 +79,7 @@ window.onload = function () {
     }
   }
 
+  //Configuração de controles
   function keyPush(event) {
     switch (event.keyCode) {
       case 37:
